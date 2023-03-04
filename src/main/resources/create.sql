@@ -27,7 +27,7 @@ CREATE TABLE Patients (
 );
 
 CREATE TABLE Appointments (
-    appointment_id VARCHAR(50),
+    appointment_id VARCHAR(50) PRIMARY KEY,
     patient_username VARCHAR(255) REFERENCES Patients(Username),
     caregiver_username VARCHAR(255) REFERENCES Caregivers(Username),
     Time date,
