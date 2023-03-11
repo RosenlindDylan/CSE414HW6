@@ -14,7 +14,6 @@ class Patient:
         self.hash = hash
 
     # getters
-    # add messages to the exceptions??
     def get(self):
         cm = ConnectionManager()
         conn = cm.create_connection()
@@ -28,7 +27,7 @@ class Patient:
                 curr_hash = row['Hash']
                 calculated_hash = Util.generate_hash(self.password, curr_salt)
                 if not curr_hash == calculated_hash:
-                    # print("Incorrect password")
+                    print("Incorrect password, please try again")
                     cm.close_connection()
                     return None
                 else:
@@ -37,6 +36,7 @@ class Patient:
                     cm.close_connection()
                     return self
         except pymssql.Error as e:
+            print("An error occured")
             raise e
         finally:
             cm.close_connection()
@@ -52,7 +52,6 @@ class Patient:
     def get_hash(self):
         return self.hash
     
-    # add messages to the exceptions??
     def save_to_db(self):
         cm = ConnectionManager()
         conn = cm.create_connection()
@@ -63,6 +62,7 @@ class Patient:
             cursor.execute(add_caregivers, (self.username, self.salt, self.hash))
             conn.commit()
         except pymssql.Error:
+            print("An error occured")
             raise
         finally:
             cm.close_connection()
